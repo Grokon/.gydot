@@ -1,0 +1,565 @@
+"##############################################################"
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker :
+"
+" GY Vim Configuration
+"
+" Grok Yon
+"
+" This is the personal Vim configuration of Grok Yon.
+"
+" File: vimrc
+"
+"##############################################################"
+
+
+set nocompatible              " be iMproved
+
+" Set GY Vim Configuration path
+let $GYPATH=$HOME."/.gydot/.vim"
+
+
+" Vundle options ----------------------------------------------------------- {{{
+
+filetype off                  " Required by Vundle
+
+" set the runtime path to include Vundle and initialize
+set rtp+=$GYPATH/bundle/Vundle.vim
+
+
+call vundle#begin()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" Load Plugins
+source $GYPATH/plugins.vim
+
+" All of your Plugins must be added before the following line
+call vundle#end()             " required
+filetype plugin indent on     " required!
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+" }}}
+
+
+
+" Basic options ----------------------------------------------------------- {{{
+
+
+set encoding=utf-8
+set modelines=0
+set showmode				     " show current mode down the bottom
+set showcmd         			 " показывать незавершенные команды в статусбаре (автодополнение ввода)
+set hidden          			 " не выгружать буфер когда переключаешься на другой
+set visualbell 				     " Use visual bell instead of beeping
+set ttyfast
+set ruler           			 " show the cursor position all the time
+set backspace=indent,eol,start	 " allow backspacing over everything in insert mode
+set number				         " show line numbers
+"set relativenumber
+set laststatus=2
+set history=1000     			 " keep 1000 lines of command line history
+set undofile
+set undoreload=10000
+set lazyredraw
+set matchtime=3
+set showbreak=↪
+set splitbelow				      " new window below for split
+set splitright				      " new window on right side for vsplit
+set autowrite
+set autoread        			  " перечитывать изменённые файлы автоматически
+set shiftround
+set title				          " показывать имя буфера в заголовке терминала
+
+" подсветка строки и колонки курсора
+if version >= 700
+    set cursorline
+endif
+
+set matchpairs+=<:>               " показывать совпадающие скобки для HTML-тегов
+set showmatch                     " показывать первую парную скобку после ввода второй
+set confirm                       " использовать диалоги вместо сообщений об ошибках
+
+
+" Display tabs and trailing spaces
+set list						                          " включить подсветку
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮		  " установить символы, которыми будет осуществляться подсветка
+
+" Don't try to highlight lines longer than 800 characters.
+set synmaxcol=800
+
+" Better Completion
+set complete=.,w,b,u,t
+set completeopt=longest,menuone,preview
+
+" Save when losing focus
+au FocusLost * :silent! wall
+
+" Resize splits when the window is resized
+au VimResized * :wincmd =
+
+" Tell the term has 256 colors
+set t_Co=256
+
+
+" }}}
+
+
+" Wildmenu completion {{{
+
+set wildmenu					                 " enable ctrl-n and ctrl-p to scroll thru matches
+set wildmode=list:longest			             " make cmdline tab completion similar to bash
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+
+set wildignore+=*.luac                           " Lua byte code
+
+set wildignore+=migrations                       " Django migrations
+set wildignore+=*.pyc                            " Python byte code
+
+set wildignore+=*.orig                           " Merge resolution files
+
+" Clojure/Leiningen
+set wildignore+=classes
+set wildignore+=lib
+
+" }}}
+
+" Line Return {{{
+
+" Make sure Vim returns to the same line when you reopen a file.
+" Thanks, Amit
+augroup line_return
+    au!
+    au BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \     execute 'normal! g`"zvzz' |
+        \ endif
+augroup END
+
+" }}}
+
+" Tabs, spaces, wrapping {{{
+
+set tabstop=8				" ширина табуляции
+set shiftwidth=4			" размер отступов (нажатие на << или >>)
+set softtabstop=4			" ширина 'мягкого' таба
+set expandtab				" преобразовать табуляцию в пробелы
+set autoindent  			" ai - включить автоотступы (копируется отступ предыдущей строки)
+set smartindent 			" Do smart autoindenting when starting a new line
+set copyindent  			" Copy the structure of the existing lines indent
+
+
+set wrap				    " (no)wrap - динамический (не)перенос длинных строк
+set linebreak				" переносить целые слова
+set textwidth=80
+set formatoptions=qrn1j
+set colorcolumn=+1			" mark the ideal max text width
+
+" }}}
+
+
+
+" Backups {{{
+
+set backup                        	" enable backups
+set noswapfile                    	" не использовать своп-файл (в него скидываются открытые буферы)
+
+set undodir=$GYPATH/tmp/undo//     	" undo files
+set backupdir=$GYPATH/tmp/backup// 	" backups
+set directory=$GYPATH/tmp/swap//   	" swap files
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
+
+" }}}
+
+
+
+" Color scheme {{{
+
+syntax on				" turn on syntax highlighting
+
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+
+" Corol scheme set in plugins.vim
+
+
+if has("gui_running")
+    set guioptions-=T
+    set guioptions+=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" }}}
+
+
+
+" Status line setup {{{{
+
+"statusline setup
+set statusline =%#identifier#
+set statusline+=[%t]    		" tail of the filename
+set statusline+=%*
+
+"display a warning if fileformat isnt unix
+set statusline+=%#warningmsg#
+set statusline+=%{&ff!='unix'?'['.&ff.']':''}
+set statusline+=%*
+
+"display a warning if file encoding isnt utf-8
+set statusline+=%#warningmsg#
+set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
+set statusline+=%*
+
+set statusline+=%h      "help file flag
+set statusline+=%y      "filetype
+
+"read only flag
+set statusline+=%#identifier#
+set statusline+=%r
+set statusline+=%*
+
+"modified flag
+set statusline+=%#identifier#
+set statusline+=%m
+set statusline+=%*
+
+set statusline+=%{fugitive#statusline()}
+
+"display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%*
+
+set statusline+=%{StatuslineTrailingSpaceWarning()}
+
+set statusline+=%{StatuslineLongLineWarning()}
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+"display a warning if &paste is set
+set statusline+=%#error#
+set statusline+=%{&paste?'[paste]':''}
+set statusline+=%*
+
+set statusline+=%=      "left/right separator
+set statusline+=%{StatuslineCurrentHighlight()}\ \ "current highlight
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+set laststatus=2				" всегда показывать строку состояния
+
+
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+
+        if !&modifiable
+            let b:statusline_trailing_space_warning = ''
+            return b:statusline_trailing_space_warning
+        endif
+
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+
+"return the syntax highlight group under the cursor ''
+function! StatuslineCurrentHighlight()
+    let name = synIDattr(synID(line('.'),col('.'),1),'name')
+    if name == ''
+        return ''
+    else
+        return '[' . name . ']'
+    endif
+endfunction
+
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[&et]' if &et is set wrong
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let b:statusline_tab_warning = ''
+
+        if !&modifiable
+            return b:statusline_tab_warning
+        endif
+
+        let tabs = search('^\t', 'nw') != 0
+
+        "find spaces that arent used as alignment in the first indent column
+        let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+
+"recalculate the long line warning when idle and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+
+"return a warning for "long lines" where "long" is either &textwidth or 80 (if
+"no &textwidth is set)
+"
+"return '' if no long lines
+"return '[#x,my,$z] if long lines are found, were x is the number of long
+"lines, y is the median length of the long lines and z is the length of the
+"longest line
+function! StatuslineLongLineWarning()
+    if !exists("b:statusline_long_line_warning")
+
+        if !&modifiable
+            let b:statusline_long_line_warning = ''
+            return b:statusline_long_line_warning
+        endif
+
+        let long_line_lens = s:LongLines()
+
+        if len(long_line_lens) > 0
+            let b:statusline_long_line_warning = "[" .
+                        \ '#' . len(long_line_lens) . "," .
+                        \ 'm' . s:Median(long_line_lens) . "," .
+                        \ '$' . max(long_line_lens) . "]"
+        else
+            let b:statusline_long_line_warning = ""
+        endif
+    endif
+    return b:statusline_long_line_warning
+endfunction
+
+"return a list containing the lengths of the long lines in this buffer
+function! s:LongLines()
+    let threshold = (&tw ? &tw : 80)
+    let spaces = repeat(" ", &ts)
+    let line_lens = map(getline(1,'$'), 'len(substitute(v:val, "\\t", spaces, "g"))')
+    return filter(line_lens, 'v:val > threshold')
+endfunction
+
+"find the median of the given array of numbers
+function! s:Median(nums)
+    let nums = sort(a:nums)
+    let l = len(nums)
+
+    if l % 2 == 1
+        let i = (l-1) / 2
+        return nums[i]
+    else
+        return (nums[l/2] + nums[(l/2)-1]) / 2
+    endif
+endfunction
+
+" }}}}
+
+
+
+
+
+" Searching and movement -------------------------------------------------- {{{
+
+
+set ignorecase				" ics - поиск без учёта регистра символов
+set smartcase				" если искомое выражения содержит символы в верхнем регистре - ищет с учётом регистра, иначе - без учёта
+set incsearch				" do incremental searching
+set showmatch
+set hlsearch				" hilight searches by default
+set gdefault
+
+"vertical/horizontal scroll off settings
+set scrolloff=3				" сколько строк внизу и вверху экрана показывать при скроллинге
+set sidescroll=1
+set sidescrolloff=10
+
+set virtualedit+=block
+
+" }}}}
+
+
+
+
+
+
+" Environments (GUI/Console) ---------------------------------------------- {{{
+
+if has('gui_running')
+    " GUI Vim
+
+    set guifont=Menlo\ Regular\ for\ Powerline:h12
+
+    " Remove all the UI cruft
+    set go-=T
+    set go-=l
+    set go-=L
+    set go-=r
+    set go-=R
+
+    highlight SpellBad term=underline gui=undercurl guisp=Orange
+
+    " Different cursors for different modes.
+    "set guicursor=n-c:block-Cursor-blinkon0
+    "set guicursor+=v:block-vCursor-blinkon0
+    "set guicursor+=i-ci:ver20-iCursor
+
+    if has("gui_macvim")
+        " Full screen means FULL screen
+        set fuoptions=maxvert,maxhorz
+
+        " Use the normal HIG movements, except for M-Up/Down
+        let macvim_skip_cmd_opt_movement = 1
+        no   <D-Left>       <Home>
+        no!  <D-Left>       <Home>
+        no   <M-Left>       <C-Left>
+        no!  <M-Left>       <C-Left>
+
+        no   <D-Right>      <End>
+        no!  <D-Right>      <End>
+        no   <M-Right>      <C-Right>
+        no!  <M-Right>      <C-Right>
+
+        no   <D-Up>         <C-Home>
+        ino  <D-Up>         <C-Home>
+        imap <M-Up>         <C-o>{
+
+        no   <D-Down>       <C-End>
+        ino  <D-Down>       <C-End>
+        imap <M-Down>       <C-o>}
+
+        imap <M-BS>         <C-w>
+        inoremap <D-BS>     <esc>my0c`y
+    else
+        " Non-MacVim GUI, like Gvim
+    end
+else
+    " Console Vim
+    " For me, this means iTerm2, possibly through tmux
+
+    " Mouse support
+    set mouse=a				" включает поддержку мыши при работе в терминале (без GUI)
+endif
+
+" }}}
+
+
+
+
+"----------
+
+"setlocal spell spelllang=ru_yo,en_us
+" циклическое переключение спелл-чекера (взято с www.opennet.ru/base/X/vim_orfo.txt.html)
+if version >= 700 && has("spell")
+"   По умолчанию проверка орфографии выключена.
+    setlocal spell spelllang=
+    setlocal nospell
+    "
+    function ChangeSpellLang()
+        if &spelllang =~ "en_us"
+            setlocal spell spelllang=ru
+            echo "spelllang: ru"
+        elseif &spelllang =~ "ru"
+            setlocal spell spelllang=
+            setlocal nospell
+            echo "spelllang: off"
+        else
+            setlocal spell spelllang=en_us
+            echo "spelllang: en"
+        endif
+    endfunc
+
+    " map spell on/off for English/Russian
+    map <F11> <Esc>:call ChangeSpiellLang()<CR>
+    " limit it to just the top 10 items
+    set sps=best,10
+endif
+
+" Эту небольшую функцию можно вставить  в свой .vimrc и все. По нажатию
+" F11 будут попеременно включаться Русский, Английски, или вообще
+" выключаться проверка орфографии. Все неправильно написанные слова будут
+" подсвечены. Теперь при наведении на это слово курсора и нажатии z=
+" выпадет менюшка, с возможными правильными вариантами. Как и везде слово
+" можно добавить к словарю (zG), перейти к следующей (]z), предыдущей ([z)
+" ошибке, пометить слово как ошибочное - zW.
+
+
+
+
+" External Configurations {
+
+    " Key Mappings
+    source $GYPATH/mappings.vim
+
+    " File Types
+    source $GYPATH/filetypes.vim
+
+    " Abbreviations
+    source $GYPATH/abbreviations.vim
+
+    " Customizations
+    source $GYPATH/custom.vim
+
+" }
+
+
+
+" Автоматически перечитывать конфигурацию VIM после сохранения
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC
+"" Если сохраняемый файл является файлом скрипта - сделать его исполняемым
+"" au BufWritePost * if getline(1) =~ "^#!.*/bin/"|silent !chmod a+x %|endif
+"" При открытии файла задавать для него соответствующий 'компилятор'
+"autocmd! BufEnter *.pl compiler perl
+"autocmd! BufEnter *.pm compiler perl
+"autocmd! BufEnter *.lua compiler lua
+
+
+
+" End of vimrc
