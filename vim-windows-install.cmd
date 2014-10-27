@@ -18,7 +18,7 @@ REM    limitations under the License.
 
 @set APP_DIR=%HOME%\.gydot
 IF NOT EXIST "%APP_DIR%" (
-  call git clone --recursive -b 3.0 https://github.com/Grokon/.gydot.git "%APP_DIR%"
+  call git clone https://github.com/Grokon/.gydot.git "%APP_DIR%"
 ) ELSE (
 	@set ORIGINAL_DIR=%CD%
     echo updating gydot
@@ -44,4 +44,4 @@ IF NOT EXIST "%HOME%/.vim/bundle/vundle" (
   call cd %HOME%
 )
 
-call vim -u "%APP_DIR%/.vim/.vimrc" +BundleInstall! +BundleClean +qall
+call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%/.vim/.vimrc" +BundleInstall! +BundleClean +qall
