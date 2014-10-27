@@ -28,8 +28,8 @@ IF NOT EXIST "%APP_DIR%" (
 	call cd "%APP_DIR%"
 )
 
-call mklink "%HOME%\.vimrc" "%APP_DIR%\.vim\.vimrc"
-call mklink "%HOME%\_vimrc" "%APP_DIR%\.vim\.vimrc"
+call mklink "%HOME%\.vimrc" "%APP_DIR%\.vim\vimrc"
+call mklink "%HOME%\_vimrc" "%APP_DIR%\.vim\vimrc"
 call mklink /J "%HOME%\.vim" "%APP_DIR%\.vim"
 
 IF NOT EXIST "%APP_DIR%\.vim\bundle" (
@@ -44,4 +44,4 @@ IF NOT EXIST "%HOME%/.vim/bundle/vundle" (
   call cd %HOME%
 )
 
-call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%/.vim/.vimrc" +BundleInstall! +BundleClean +qall
+call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%/.vim/.vimrc" +PluginInstall! +PluginClean +qall

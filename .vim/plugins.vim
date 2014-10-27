@@ -11,6 +11,9 @@
 "
 "##############################################################"
 
+set nocompatible
+
+
 " Setup Bundle Support {
 
 	filetype off                  								" Required by Vundle

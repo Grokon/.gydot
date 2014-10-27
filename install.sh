@@ -14,7 +14,7 @@ cp -vi .vim $GYPATH
 
 ln -vs $GYPATH/.vim $HOME/.vim
 ln -vs $GYPATH/.vim/vimrc $HOME/.vimrc
-ln -vs $GYPATH/.vim/gvimrc $HOME/.gvimrc
+#ln -vs $GYPATH/.vim/gvimrc $HOME/.gvimrc
 mkdir -p
 
 echo "# Installing Vundle"
