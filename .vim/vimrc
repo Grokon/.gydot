@@ -359,16 +359,16 @@ endif
 " External Configurations {
 
     " Key Mappings
-    source $GYPATH/mappings.vim
+    source ~/.vim/mappings.vim
 
     " File Types
-    source $GYPATH/filetypes.vim
+    source ~/.vim/filetypes.vim
 
     " Abbreviations
-    source $GYPATH/abbreviations.vim
+    source ~/.vim/abbreviations.vim
 
     " Customizations
-    source $GYPATH/custom.vim
+    source ~/.vim/custom.vim
 
 " }
 
