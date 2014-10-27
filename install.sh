@@ -17,7 +17,7 @@ ln -vs $GYPATH/.vim/vimrc $HOME/.vimrc
 ln -vs $GYPATH/.vim/gvimrc $HOME/.gvimrc
 
 echo "# Installing Vundle"
-git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/vundle
 
 echo "# Installing Vim plugins using Vundle"
 vim +PluginInstall +qall

@@ -39,7 +39,7 @@
 
 " Leader
 let mapleader = ","
-let maplocalleader = "\\"
+let maplocalleader = '_'
 
 
 
@@ -65,6 +65,50 @@ vmap <silent> <C-F> <Esc>a<C-^><Esc>:call MyKeyMapHighlight()<CR>gv
 
 
 
+" Easier moving of code blocks
+vnoremap < <gv 					" Shift+> keys
+vnoremap > >gv 					" Shift+< keys
+
+
+
+" CTRL-Z is Undo
+noremap <C-z> u
+inoremap <C-z> <C-O>u
+
+" CTRL-Y is Redo
+noremap <C-y> <C-R>
+inoremap <C-y> <C-O><C-R>
+
+" CTRL-A is Select all
+noremap <C-a> gggH<C-O>G
+inoremap <C-a> <C-O>gg<C-O>gH<C-O>G
+cnoremap <C-a> <C-C>gggH<C-O>G
+onoremap <C-a> <C-C>gggH<C-O>G
+snoremap <C-a> <C-C>gggH<C-O>G
+xnoremap <C-a> <C-C>ggVG
+
+
+" CTRL-S is Quicksave command
+noremap <C-s> :update<CR>
+vnoremap <C-s> <C-C>:update<CR>
+inoremap <C-s> <C-O>:update<CR>
+
+
+" CTRL-O is Quickopen file
+noremap <C-o> :browse confirm e<CR>
+vnoremap <C-o> :browse confirm e<CR>
+inoremap <C-o> :browse confirm e<CR>
+
+
+" CTRL-W is Quicksave as.. file
+noremap <C-w> :browse confirm saveas<CR>
+vnoremap <C-w> :browse confirm saveas<CR>
+inoremap <C-w> :browse confirm saveas<CR>
+
+
+
+" Activate autocomplete at <Ctrl+Space>
+inoremap <C-space> <C-x><C-o>
 
 
 
