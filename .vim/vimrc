@@ -301,6 +301,7 @@ if has('gui_running')
         inoremap <D-BS>     <esc>my0c`y
     else
         " Non-MacVim GUI, like Gvim
+        set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
 
     end
 else
