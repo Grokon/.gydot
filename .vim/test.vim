@@ -57,6 +57,17 @@ set confirm                       " использовать диалоги вм
 
 
 
+""    set background=light
+""   if filereadable(expand("~/.vim/bundle/vim-colors/colors/solarized.vim"))
+""        let g:solarized_termcolors=256
+""        let g:solarized_termtrans=1
+""        let g:solarized_contrast="normal"
+""        let g:solarized_visibility="normal"
+""        color solarized                     " Load a colorscheme
+""    endif
+
+
+
 
 " Don't try to highlight lines longer than 800 characters.
 set synmaxcol=800

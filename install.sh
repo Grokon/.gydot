@@ -9,13 +9,17 @@ for file in $HOME/.vim $HOME/.vimrc $HOME/.gvimrc ; do
 done
 
 echo "# Installing configs in $HOME directory"
-mkdir -p $GYPATH
-cp -vi .vim $GYPATH
+if [ ! -d $GYPATH ]; then
+	git clone https://github.com/Grokon/.gydot.git $GYPATH
+else
+	git pull
+fi
+
 
 ln -vs $GYPATH/.vim $HOME/.vim
 ln -vs $GYPATH/.vim/vimrc $HOME/.vimrc
 #ln -vs $GYPATH/.vim/gvimrc $HOME/.gvimrc
-mkdir -p
+#mkdir -p
 
 echo "# Installing Vundle"
 git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/vundle
@@ -23,5 +27,5 @@ git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/vundle
 echo "# Installing Vim plugins using Vundle"
 vim +PluginInstall +qall
 
-echo "# Installing Vim plugins customizations"
-echo "# - MatchTag custom filetypes"
+
+echo "\n\n \033[0;32m....D O N E....!\033[0m"

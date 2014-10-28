@@ -13,6 +13,15 @@
 
 set nocompatible
 
+" Windows Compatible {
+    " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+    " across (heterogeneous) systems easier.
+    if has('win32') || has('win64')
+        set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+    else
+        set shell=/bin/sh
+    endif
+" }
 
 " Setup Bundle Support {
 
@@ -95,8 +104,6 @@ set nocompatible
     " PHP {
         if count(g:vim_plugins, 'php')
             Plugin 'vim/PIV'
-            	let g:DisableAutoPHPFolding = 0
-            	let g:PIVAutoClose = 0
             Plugin 'arnaud-lb/vim-php-namespace'
             Plugin 'beyondwords/vim-twig'
         endif
@@ -196,25 +203,15 @@ set nocompatible
 " All of your Plugins must be added before the following line
 call vundle#end()             " required
 
-" To ignore plugin indent changes, instead use:
-filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 
 
-" Plugin settings --------------------------------------------------------- {{{
 
-    " General plugins settings{
-        if count(g:vim_plugins, 'general')
 
-            " nerdtree settings{
+" Plugins settings --------------------------------------------------------- {{{
+
+	" General {
+        " nerdtree settings{
+            if isdirectory(expand("~/.vim/bundle/nerdtree"))
 		        let NERDTreeShowBookmarks=1
 		        let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
 		        let NERDTreeChDirMode=0
@@ -232,10 +229,12 @@ filetype plugin on
 				map <C-e> <plug>NERDTreeTabsToggle<CR>
 	            map <leader>e :NERDTreeFind<CR>
 	            nmap <leader>nt :NERDTreeFind<CR>
-	        " }
+	        endif
+	    " }
 
 
-            "CTRLP settings {
+        "CTRLP settings {
+            if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
 	            let g:ctrlp_working_path_mode = 'ra'
 	            nnoremap <silent> <D-t> :CtrlP<CR>
 	            nnoremap <silent> <D-r> :CtrlPMRU<CR>
@@ -262,17 +261,21 @@ filetype plugin on
 	                \ },
 	                \ 'fallback': s:ctrlp_fallback
 	            \ }
-	        "}
+	        endif
+	    "}
 
-            " ctrlp-funky settings {
+        " ctrlp-funky settings {
+            if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
             	let g:ctrlp_extensions = ['funky']
                 "funky
                 nnoremap <Leader>fu :CtrlPFunky<Cr>
-            " }
+            endif
+        " }
 
 
-            " Aitline settings{
-				"let g:airline_theme='badwolf'
+        " Airline settings{
+            if isdirectory(expand("~/.vim/bundle/vim-airline/"))
+				let g:airline_theme='zenburn'
 				let g:airline_powerline_fonts = 0
 				let g:airline#extensions#tabline#enabled = 1
 				let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -285,57 +288,62 @@ filetype plugin on
 	                let g:airline_left_sep='›'  " Slightly fancier than '>'
 	                let g:airline_right_sep='‹' " Slightly fancier than '<'
 	            endif
+	        endif
+        "}
 
-            "}
-
-            " Undotree settings {
+        " Undotree settings {
+            if isdirectory(expand("~/.vim/bundle/undotree/"))
 	            nnoremap <Leader>u :UndotreeToggle<CR>
 	            " If undotree is opened, it is likely one wants to interact with it.
 	            let g:undotree_SetFocusWhenToggle=1
-            "}
+	        endif
+        "}
 
-            " vim-indent-guides settings {
+        " vim-indent-guides settings {
+            if isdirectory(expand("~/.vim/bundle/vim-indent-guides/"))
 	            let g:indent_guides_start_level = 2
 	            let g:indent_guides_guide_size = 1
 	            let g:indent_guides_enable_on_vim_startup = 1
-            "}
+	        endif
+        "}
 
-            " wildfire settings {
+        " wildfire settings {
+            if isdirectory(expand("~/.vim/bundle/wildfire.vim/"))
 			    let g:wildfire_objects = {
 			                \ "*" : ["i'", 'i"', "i)", "i]", "i}", "ip"],
 			                \ "html,xml" : ["at"],
 			                \ }
-            " }
+			endif
+        " }
 
-			" Sessionman settings{
+		" Sessionman settings{
+			if isdirectory(expand("~/.vim/bundle/sessionman.vim/"))
 				set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
 				nmap <leader>sl :SessionList<CR>
 	            nmap <leader>ss :SessionSave<CR>
 	            nmap <leader>sc :SessionClose<CR>
-			"}
+	        endif
+		"}
 
 
-			" Startify settings {
+		" Startify settings {
+			if isdirectory(expand("~/.vim/bundle/vim-startify/"))
 				let g:startify_change_to_dir = 0
 				let g:startify_files_number = 8
 				let g:startify_bookmarks = ['~/.vimrc',]
 				let g:startify_skiplist = ['vimrc',]
+			endif
+		" }
 
-			" }
-
-
-
-        endif
     " }
 
 
 
 
-    " General Programming plugin settings {
-        if count(g:vim_plugins, 'programming')
+    "Programming {
 
-
-        	" Syntastic settings {
+       	" Syntastic settings {
+       		if isdirectory(expand("~/.vim/bundle/syntastic/"))
 				let g:syntastic_always_populate_loc_list = 1
 				let g:syntastic_auto_loc_list = 1
 				let g:syntastic_enable_signs = 1
@@ -348,10 +356,12 @@ filetype plugin on
 				let g:syntastic_style_error_symbol = 'X'
 				let g:syntastic_warning_symbol = 'x'
 				let g:syntastic_style_warning_symbol = 'x'
-        	"}
+			endif
+        "}
 
 
-            " Fugitive settings {
+        " Fugitive settings {
+        	if isdirectory(expand("~/.vim/bundle/vim-fugitive/"))
 	            nnoremap <silent> <leader>gs :Gstatus<CR>
 	            nnoremap <silent> <leader>gd :Gdiff<CR>
 	            nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -364,9 +374,11 @@ filetype plugin on
 	            " Mnemonic _i_nteractive
 	            nnoremap <silent> <leader>gi :Git add -p %<CR>
 	            nnoremap <silent> <leader>gg :SignifyToggle<CR>
-            "}
+	        endif
+        "}
 
-            " Tabular settings {
+        " Tabularize {
+        	if isdirectory(expand("~/.vim/bundle/tabular"))
 	            nmap <Leader>a& :Tabularize /&<CR>
 	            vmap <Leader>a& :Tabularize /&<CR>
 	            nmap <Leader>a= :Tabularize /=<CR>
@@ -383,37 +395,47 @@ filetype plugin on
 	            vmap <Leader>a,, :Tabularize /,\zs<CR>
 	            nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 	            vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-            "}
+	        endif
+        "}
 
-            " Tagbar settings {
-	            if executable('ctags')
+        " Tagbar settings {
+	        if isdirectory(expand("~/.vim/bundle/tagbar/"))
 
-	                	 set tags=./tags;/,~/.vimtags
+	               	set tags=./tags;/,~/.vimtags
 
-	        			" Make tags placed in .git/tags file available in all levels of a repository
-	        			let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-	        			if gitroot != ''
-	            			let &tags = &tags . ',' . gitroot . '/.git/tags'
-	        			endif
-	        			nmap <F8> :TagbarToggle<CR>
-						let g:tagbar_autofocus = 0 					" автофокус на Tagbar при открытии
+	        		"" Make tags placed in .git/tags file available in all levels of a repository
+	        		let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+	        		if gitroot != ''
+	            		let &tags = &tags . ',' . gitroot . '/.git/tags'
+	        		endif
+	        		nmap <F8> :TagbarToggle<CR>
+					let g:tagbar_autofocus = 0 					" автофокус на Tagbar при открытии
 
-	            endif
-	        " }
+	        endif
+	    " }
 
-        endif
+    " }
+
+
+
+    " PHP {
+
+    	" PIV PHP
+    	    if isdirectory(expand("~/.vim/bundle/PIV"))
+            	let g:DisableAutoPHPFolding = 0
+            	let g:PIVAutoClose = 0
+            endif
+        " }
     " }
 
 
 
 
 
+	" Python {
 
-	" Python plugins settings ------------------------------------------------- {{{
-
-		if count(g:vim_plugins, 'python')
-
-			" Python-mode settings {
+		" Python-mode settings {
+			if isdirectory(expand("~/.vim/bundle/python-mode"))
 				" Python-mode
 				" Activate rope
 				" Keys:
@@ -462,20 +484,23 @@ filetype plugin on
 				let g:pymode_lint_checkers = ['pyflakes']
 				let g:pymode_trim_whitespaces = 0
 				let g:pymode_options = 0
+			endif
+		" }
 
-			" }
-
-			" Jedi-vim {
+		" Jedi-vim {
+			if isdirectory(expand("~/.vim/bundle/jedi-vim"))
 				let g:jedi#popup_on_dot = 0 	 	" Disable the automatic suggestions
 				let g:jedi#popup_select_first = 0	" Disable first select from auto-complete
-			" }
+			endif
+		" }
 
-			" Python code check on PEP8 {
+		" Python code check on PEP8 {
+			if isdirectory(expand("~/.vim/bundle/vim-python-pep8-indent"))
 				autocmd FileType python map <buffer> <leader>8 :PymodeLint<CR>
-			" }
+			endif
+		" }
 
-		endif
-	" }}}
+	" }
 
 
 

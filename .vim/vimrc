@@ -109,7 +109,11 @@ set nocompatible                                        " be iMproved (Must be f
 
 " Vim UI ------------------------------------------------------------------ {{{
 
-    colors zenburn                                      " Set colorcheme
+    " Set colorcheme
+        if filereadable(expand("~/.vim/bundle/vim-colorschemes/colors/zenburn.vim"))
+            colors zenburn
+        endif
+
 
     set tabpagemax=15                                   " Only show 15 tabs
     set showmode                                        " show current mode down the bottom
@@ -245,19 +249,7 @@ augroup END
 if has('gui_running')
     " GUI Vim
 
-    set background=light
-""   if filereadable(expand("~/.vim/bundle/vim-colors/colors/solarized.vim"))
-        let g:solarized_termcolors=256
-        let g:solarized_termtrans=1
-        let g:solarized_contrast="normal"
-        let g:solarized_visibility="normal"
-        color solarized                     " Load a colorscheme
-""    endif
-
-    set guifont=Menlo\ Regular\ for\ Powerline:h12
-
-
-    set lines=40                " 40 lines of text instead of 24
+    set lines=50 columns=125                " 40 lines of text instead of 24
 
     " Remove all the UI cruft
     set go-=T                   " Remove the toolbar
@@ -276,6 +268,8 @@ if has('gui_running')
     if has("gui_macvim")
         " Full screen means FULL screen
         set fuoptions=maxvert,maxhorz
+
+        set guifont=Menlo\ Regular\ for\ Powerline:h12
 
         " Use the normal HIG movements, except for M-Up/Down
         let macvim_skip_cmd_opt_movement = 1
