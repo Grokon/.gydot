@@ -40,8 +40,6 @@ IF NOT EXIST "%HOME%/.vim/bundle/vundle" (
   call cd %HOME%
 )
 
-call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%\.vim\.vimrc" +PluginInstall! +PluginClean +qall
-
-
+call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%HOME%\.vimrc" +PluginInstall! +PluginClean +qall
 
 @echo on

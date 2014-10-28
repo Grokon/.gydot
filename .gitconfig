@@ -9,7 +9,7 @@
         autocrlf = input
         safecrlf = true
         editor = vim
-        excludesfile = ~/.gitignore-global
+#        excludesfile = ~/.gitignore-global
 
 [alias]
         st = status
@@ -29,8 +29,8 @@
 [merge]
         tool = vimdiff
 
-[init]
-        templatedir = ~/.git_templates
+#[init]
+#        templatedir = ~/.git_templates
 
 [color]
         ui = true
