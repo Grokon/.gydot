@@ -24,6 +24,10 @@ call mklink "%HOME%\.vimrc" "%APP_DIR%\.vim\vimrc"
 call mklink "%HOME%\_vimrc" "%APP_DIR%\.vim\vimrc"
 call mklink /J "%HOME%\.vim" "%APP_DIR%\.vim"
 
+
+call mklink "%HOME%\.gitconfig" "%APP_DIR%\.gitconfig"
+call mklink "%HOME%\.gitignore-global" "%APP_DIR%\.gitignore-global"
+
 IF NOT EXIST "%APP_DIR%\.vim\bundle" (
 	call mkdir "%APP_DIR%\.vim\bundle"
 )

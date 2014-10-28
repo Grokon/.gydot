@@ -1,10 +1,9 @@
 [user]
-	name = Grok Yon
-	email = grokyon@gmail.com
+        name = Grok Yon
+        email = grokyon@gmail.com
 
 [github]
         user = Grokon
-        token = ae9394b8bbf7eb87784e245b43da9bb429ea977f
 
 [core]
         autocrlf = input
@@ -39,4 +38,10 @@
         status = auto
         branch = auto
 
+[credential]
+        helper = cache --timeout=3600
+
+
+[log]
+        decorate = full
 
