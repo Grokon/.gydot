@@ -1,6 +1,6 @@
-REM    Copyright 2014 Steve Francia
+REM    Copyright 2014 Grok Yon
 REM
-REM    Installing configs dir
+REM    Windows Installation script
 REM
 
 @echo off
