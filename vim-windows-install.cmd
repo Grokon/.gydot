@@ -33,14 +33,14 @@ IF NOT EXIST "%APP_DIR%\.vim\bundle" (
 )
 
 IF NOT EXIST "%HOME%/.vim/bundle/vundle" (
-	call git clone https://github.com/gmarik/vundle.git "%HOME%/.vim/bundle/vundle"
+	call git clone https://github.com/gmarik/vundle.git "%HOME%\.vim\bundle\vundle"
 ) ELSE (
   call cd "%HOME%/.vim/bundle/vundle"
   call git pull
   call cd %HOME%
 )
 
-call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%/.vim/.vimrc" +PluginInstall! +PluginClean +qall
+call "C:\Program Files (x86)\vim\vim74\vim.exe" -u "%APP_DIR%\.vim\.vimrc" +PluginInstall! +PluginClean +qall
 
 
 
